@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Admin</title>
+<meta name="author" content="Arjun Wadhwa"/>
+<meta name="viewport" content=" width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
+<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="../css/style.css">
+<link href='https://fonts.googleapis.com/css?family=Raleway:400,300,200,500,700' rel='stylesheet' type='text/css'>
+<script type="text/javascript" src="../js/bootstrap.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-resource.js"></script>
+<script src="../js/foodmall.js"></script>
+</head>
+<body ng-app="foodmall">
+	<div class="mainContainer" >
+			<div class="screen">
+				<div class="header">
+					<div class="welcome">
+						Welcome, Arjun 
+					</div>
+					<div class="brand">
+						<img src="./images/logo.png" width="300px">
+					</div>
+				</div>
+				<div class="formSecond">
+					<form class="form-auth" ng-submit="login()">
+						<input type="text" ng-model="user.username" placeholder="ID"></input>
+						<input type="password" ng-model="user.password" placeholder="ID"></input>
+						<p class="text-warning">{{error_message}}</p>
+						<button type="submit" value="login"><div class="text">Next</div></button>
+					</form>
+				</div>
+			</div>
+	</div>
+</body>
+
+<script id="menuItems" type="text/x-jquery-tmpl">
+		{{if (foodItems.menu==1)}}
+			{{each(oIndex, o) foodItems.breakfast}}
+				<div class="col-md-3 itemDetail" style="background-image:url(${location})">
+						<div class="name">${name}</div>
+						<div class="price">${price}</div>
+						<div class="circle"></div>
+				</div>
+			{{/each}}
+		{{else}}
+		{{if (foodItems.menu==2)}}
+			{{each(oIndex, o) foodItems.milkShakes}}
+				<div class="col-md-3 itemDetail" style="background-image:url(${location})">
+						<div class="name">${name}</div>
+						<div class="price">${price}</div>
+						<div class="circle"></div>
+				</div>
+			{{/each}}
+		{{else}}
+		{{if (foodItems.menu==3)}}
+			{{each(oIndex, o) foodItems.beverages}}
+				<div class="col-md-3 itemDetail" style="background-image:url(${location})">
+						<div class="name">${name}</div>
+						<div class="price">${price}</div>
+						<div class="circle"></div>
+				</div>
+			{{/each}}
+		{{else}}
+		{{if (foodItems.menu==4)}}
+			{{each(oIndex, o) foodItems.southIndian}}
+				<div class="col-md-3 itemDetail" style="background-image:url(${location})">
+						<div class="name">${name}</div>
+						<div class="price">${price}</div>
+						<div class="circle"></div>
+				</div>
+			{{/each}}
+		{{else}}
+		{{if (foodItems.menu==5)}}
+			{{each(oIndex, o) foodItems.chinese}}
+				<div class="col-md-3 itemDetail" style="background-image:url(${location})">
+						<div class="name">${name}</div>
+						<div class="price">${price}</div>
+						<div class="circle"></div>
+				</div>
+			{{/each}}
+		{{else}}
+		{{if (foodItems.menu==6)}}
+			{{each(oIndex, o) foodItems.vegStarters}}
+				<div class="col-md-3 itemDetail" style="background-image:url(${location})">
+						<div class="name">${name}</div>
+						<div class="price">${price}</div>
+						<div class="circle"></div>
+				</div>
+			{{/each}}
+
+		{{/if}} {{/if}} {{/if}} {{/if}} {{/if}} {{/if}}
+</script>
+<script id="bill" type="text/x-jquery-tmpl">
+		<div class="col-md-7">${foodItems.itemName}</div>
+		<div class="col-md-2">1</div>
+		<div class="col-md-3">${foodItems.itemPrice}</div>
+</script>
+<script id="total" type="text/x-jquery-tmpl">
+<span style="font-size:24px">₹${foodItems.total}</span>
+</script>
+<script src="../scripts/jquery.js"></script>
+<script src="../scripts/bootstrap.min.js"></script>
+<script src="../scripts/jquery.tmpl.min.js"></script>
+<script src="../scripts/jslinq.js"></script>
+<script src="../scripts/tocca.min.js"></script>
+<script src="../js/base.js"></script>
+<script src="../js/default.js"></script>
+</html>
