@@ -11,7 +11,7 @@ require('./models/models');
 var api = require('./routes/api');
 var authenticate = require('./routes/authenticate')(passport);
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/foodmall');
+mongoose.connect('mongodb://arjunw7:13bcb0062@ds035776.mlab.com:35776/heroku_mhj8vc1z');
 var app = express();
 
 // view engine setup
