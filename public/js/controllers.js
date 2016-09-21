@@ -1,53 +1,171 @@
 var app = angular.module('foodmall', ['ngRoute', 'ngResource']).run(function($rootScope) {
-	$rootScope.authenticated = true;
-	$rootScope.current_user = '';
-	
-	$rootScope.signout = function(){
-    	$http.get('auth/signout');
-    	$rootScope.authenticated = false;
-    	$rootScope.current_user = '';
-	};
+  $rootScope.authenticated = true;
+  $rootScope.current_user = '';
+  $rootScope.current_user_name = '';
+  $rootScope.total= 0;
+  
 });
 
 app.config(function($routeProvider){
-	$routeProvider
-		//the timeline display
-		.when('/', {
-			templateUrl: 'main.html',
-			controller: 'mainController'
-		})
-		//the login display
-		.when('/login', {
-			templateUrl: 'login.html',
-			controller: 'authController'
-		})
-		//the signup display
-		.when('/signup', {
-			templateUrl: 'signup.html',
-			controller: 'authController'
-		})
+  $routeProvider
+
+    .when('/', {
+      templateUrl: 'main.ejs',
+      controller: 'mainController'
+    })
+
+    .when('/main', {
+      templateUrl: 'main.ejs',
+      controller: 'mainController'
+    })
+
+    //the login display
+    .when('/login', {
+      templateUrl: 'login.ejs',
+      controller: 'authController'
+    })
+    //the signup display
+    .when('/signup', {
+      templateUrl: 'signup.ejs',
+      controller: 'authController'
+    })
+     //the forgot password display
+    .when('/forgotPassword', {
+      templateUrl: 'forgotPassword.ejs',
+      controller: 'authController'
+    })
+    //the forgot password display
+    .when('/reset/:token', {
+      templateUrl: 'reset.ejs',
+      controller: 'authController'
+    })
 
     .when('/menu', {
-      templateUrl: 'order.html',
+      templateUrl: 'order.ejs',
+      controller: 'mainController'
+    })
+
+    .when('/admin', {
+      templateUrl: 'admin.ejs',
+      controller: 'authController'
+    })
+
+    .when('/dashboard', {
+      templateUrl: 'dashboard.ejs',
+      controller: 'mainController'
+    })
+
+    .when('/addItem', {
+      templateUrl: 'addItem.ejs',
+      controller: 'mainController'
+    })
+
+    .when('/removeItem', {
+      templateUrl: 'removeItems.ejs',
+      controller: 'mainController'
+    })
+
+    .when('/users', {
+      templateUrl: 'users.ejs',
+      controller: 'mainController'
+    })
+
+    .when('/orderHistory', {
+      templateUrl: 'orderHistory.ejs',
       controller: 'mainController'
     })
 
     .when('/reload', {
-      templateUrl: 'reload.html',
+      templateUrl: 'reload.ejs',
       controller: 'mainController'
     });
 });
 
 
-app.controller('mainController', function($scope, postService){
+app.controller('mainController', function($scope, $rootScope, $http, postService, userService, orderService, historyService){
   $scope.menu= postService.query();
-  // $scope.newItem = {category: '', item_name: '', item_price: '', image_location: ''};
-  console.log($scope.menu)
+  $scope.users=userService.query();
+  $scope.orderHistory=historyService.query();
 
-  // $scope.post = function(){
-  //   $scope.menu.push($scope.newItem);
-  //   $scope.newItem = {category: '', item_name: '', item_price: '', image_location: ''};
+  $scope.createOrder = function(name, price){
+    $scope.newOrder={item_name: name, item_price: price};
+    $rootScope.total= $rootScope.total + price;
+    $http.post('api/order', $scope.newOrder).success(function(data){
+     $scope.refreshOrder();
+    });
+  };
+
+  $scope.refreshOrder = function(){
+    $scope.order=orderService.query();
+  };
+
+  $scope.refreshMenu = function(){
+    $scope.menu=postService.query();
+  };
+
+  $scope.refreshUsers = function(){
+    $scope.users=userService.query();
+  }
+  $scope.refreshOrder();
+  
+  // console.log($rootScope.current_user);
+  // $scope.details = {name: $scope.c_name, total: $scope.total};
+  // console.log($scope.details);
+  $scope.proceed = function(current_user, total){
+  $scope.orderHistory = {order_by: current_user, amount: total};
+  $http.post('api/orderHistory', $scope.orderHistory).success(function(data){
+    console.log("done");
+  });
+  $http.delete('api/order', {});
+  $rootScope.total=0;
+  };
+
+  $scope.removeOrder = function(id, price){
+    $http.delete('/api/order/' + id).success(function(response){
+        $scope.refreshOrder();
+      });
+    $rootScope.total = $rootScope.total-price;
+  }
+
+  $scope.removeItem = function(id){
+    $http.delete('/api/menu/' + id).success(function(response){
+        $scope.refreshMenu();
+      });
+  }
+
+  $scope.removeUser = function(id){
+    if(confirm("User will be permanently deleted. Are you sure?")==true){
+      $http.delete('/api/users/' + id).success(function(response){
+          $scope.refreshUsers();
+      });  
+    }
+    
+  }
+
+   $scope.addItem = function(){
+    $scope.newItem={item_name: '', item_price: '', category: '', image_location: ''};
+    $http.post('api/menu', $scope.newItem).success(function(data){
+     console.log("done");
+    });
+  };
+
+  $scope.signout = function(){
+      $http.get('auth/signout');
+      $rootScope.authenticated = false;
+      $rootScope.current_user = '';
+  };
+
+  // $scope.randomString = function(length, chars) {
+  //   var result = '';
+  //   for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+  //   return result;
+  // }
+  // $scope.generateCaptcha = function(){
+  // var rString = $scope.randomString(6, '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+  // document.getElementById("captcha").innerHTML = rString;
   // };
+  // $scope.generateCaptcha();
+
 
   //script for ripple efect
   var parent, ink, d, x, y;
@@ -76,7 +194,6 @@ app.controller('mainController', function($scope, postService){
       
       //set the position and add class .animate
       ink.css({top: y+'px', left: x+'px'}).addClass("animate");
-      console.log('run');
     });
     
 });
@@ -84,39 +201,143 @@ app.controller('mainController', function($scope, postService){
 app.factory('postService', function($resource){
   return $resource('/api/menu');
 });
+
+app.factory('userService', function($resource){
+  return $resource('/api/users')
+});
+
+app.factory('orderService', function($resource){
+  return $resource('api/order')
+});
+
+app.factory('historyService', function($resource){
+  return $resource('api/orderHistory')
+});
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    
-app.controller('authController', function($scope, $http, $rootScope, $location){
-  $scope.user = {username: '', password: ''};
+app.controller('authController', function($scope, $http, $rootScope, $location, $routeParams){
+  $scope.user = {fullName: '', contact: '', username: '', password: ''};
   $scope.error_message = '';
 
   $scope.login = function(){
+    var x = document.getElementById('captcha').innerHTML;
+    var y = document.getElementById('captchaText').value;
+    if (x == y) {
+        $http.post('/auth/login', $scope.user).success(function(data){
+          if(data.state == 'success'){
+        $rootScope.authenticated = true;
+        $rootScope.current_user = data.user.username;
+        $rootScope.current_user_name = data.user.fullName;
+        $location.path('/menu');
+        }
+        else{
+          $scope.error_message = data.message;
+        }
+    });
+
+    }
+    else{
+      alert("Verification code does not match!");
+      return false;
+    }
+
+    
+  };
+  $scope.adminLogin = function(){
+    var x = document.getElementById('captcha').innerHTML;
+    var y = document.getElementById('captchaText').value;
+    if (x == y) {
     $http.post('/auth/login', $scope.user).success(function(data){
       if(data.state == 'success'){
         $rootScope.authenticated = true;
         $rootScope.current_user = data.user.username;
-        $location.path('/menu');
+        $rootScope.current_user_name = data.user.fullName;
+        $location.path('/dashboard');
       }
       else{
         $scope.error_message = data.message;
       }
     });
+    }
+    else{
+      alert("Verification code does not match!");
+      return false;
+    }
   };
-
   $scope.register = function(){
+    var x = document.getElementById('captcha').innerHTML;
+    var y = document.getElementById('captchaText').value;
+    if (x == y) {
     $http.post('/auth/signup', $scope.user).success(function(data){
       if(data.state == 'success'){
         $rootScope.authenticated = true;
         $rootScope.current_user = data.user.username;
+        $rootScope.current_user_name = data.user.fullName;
         alert("Registration Successful!!")
-        $location.path('/');
+        $location.path('/login');
       }
       else{
         $scope.error_message = data.message;
       }
     });
+    }
+    else{
+      alert("Verification code does not match!");
+      return false;
+    }
   };
+  
+   $scope.forgot = function(){
+    var x = document.getElementById('captcha').innerHTML;
+    var y = document.getElementById('captchaText').value;
+    if (x == y) {
+      $http.post('/api/forgot', $scope.user);
+      alert('An e-mail has been sent to your email with further instructions');
+      $location.path('/login');
+    }
+    else{
+      alert("Verification code does not match!");
+      return false;
+    }
+  };
+  $scope.resetPassword = function(){
+    var x = document.getElementById('captcha').innerHTML;
+    var y = document.getElementById('captchaText').value;
+    if (x == y) {
+      $http.post('/api/reset/' + $routeParams.token, $scope.user, $routeParams.token).success(function(){
+        alert('Password reset succesful');
+        $location.path('/login');
+      });
+      
+    }
+    else{
+      alert("Verification code does not match!");
+      return false;
+    }
+  };
+  
+  $('#upper').keyup(function() {
+        this.value = this.value.toUpperCase();
+    });
 
-  //script for ripple effect
+  $scope.randomString = function(length, chars) {
+    var result = '';
+    for (var i = length; i > 0; --i) result += chars[Math.floor(Math.random() * chars.length)];
+    return result;
+  }
+  $scope.generateCaptcha = function(){
+  var rString = $scope.randomString(6, '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ');
+  document.getElementById("captcha").innerHTML = rString;
+  };
+  $scope.generateCaptcha();
+
+  // $scope.generateCaptcha = function(){
+  // var x = Math.floor((Math.random() * 500000) + 200000);
+  // document.getElementById("captcha").innerHTML = x;
+  // };
+  // $scope.generateCaptcha();
+  // //script for ripple effect
+
+
   var parent, ink, d, x, y;
     $("button div, .tag, .circle").click(function(e){
       parent = $(this).parent();

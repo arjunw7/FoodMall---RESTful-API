@@ -5,100 +5,36 @@
 <title>Admin</title>
 <meta name="author" content="Arjun Wadhwa"/>
 <meta name="viewport" content=" width=device-width, initial-scale=1.0"/>
-<link rel="stylesheet" type="text/css" href="../css/bootstrap.css">
-<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="../css/style.css">
-<link href='https://fonts.googleapis.com/css?family=Raleway:400,300,200,500,700' rel='stylesheet' type='text/css'>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script type="text/javascript" src="../js/bootstrap.js"></script>
-<script type="text/javascript" src="../js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-route.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular-resource.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href='/bower_components/bootstrap/dist/css/bootstrap.css'>
+<link rel="stylesheet" type="text/css" href='/bower_components/raleway/raleway.css'>
+<script src="/bower_components/jquery/dist/jquery.js"></script>
+<script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/bower_components/angular/angular.js"></script>
+<script src="/bower_components/angular-resource/angular-resource.js"></script>
+<script src="/bower_components/angular-route/angular-route.js"></script>
 <script src="js/controllers.js"></script>
 <script src="js/default.js"></script>
+<script>
+	jQuery(window).load(function() {
+		jQuery("#status").fadeOut();
+		jQuery("#preloader").delay(1000).fadeOut(500);
+	});
+</script>
 </head>
 <body ng-app="foodmall">
+	<div id="preloader">
+  		<div id="status">
+  			<img src="/images/loader.gif">
+       		<!-- <div class="loaderText">LOADING..</div> -->
+		</div>
+	</div>
 	<div class="mainContainer" >
 			<div class="screen">
-				<div class="header">
-					<div class="welcome">
-						Welcome, Arjun 
-					</div>
-					<div class="brand">
-						<img src="../images/logo.png" width="300px">
-					</div>
-				</div>
 				<!-- Add Order Slide -->
 				<div ng-view>
 				</div>
 			</div>
 	</div>
 </body>
-
-<script id="menuItems" type="text/x-jquery-tmpl">
-		{{if (foodItems.menu==1)}}
-			{{each(oIndex, o) foodItems.breakfast}}
-				<div class="col-md-3 itemDetail" style="background-image:url(${location})">
-						<div class="name">${name}</div>
-						<div class="price">${price}</div>
-						<div class="circle"></div>
-				</div>
-			{{/each}}
-		{{else}}
-		{{if (foodItems.menu==2)}}
-			{{each(oIndex, o) foodItems.milkShakes}}
-				<div class="col-md-3 itemDetail" style="background-image:url(${location})">
-						<div class="name">${name}</div>
-						<div class="price">${price}</div>
-						<div class="circle"></div>
-				</div>
-			{{/each}}
-		{{else}}
-		{{if (foodItems.menu==3)}}
-			{{each(oIndex, o) foodItems.beverages}}
-				<div class="col-md-3 itemDetail" style="background-image:url(${location})">
-						<div class="name">${name}</div>
-						<div class="price">${price}</div>
-						<div class="circle"></div>
-				</div>
-			{{/each}}
-		{{else}}
-		{{if (foodItems.menu==4)}}
-			{{each(oIndex, o) foodItems.southIndian}}
-				<div class="col-md-3 itemDetail" style="background-image:url(${location})">
-						<div class="name">${name}</div>
-						<div class="price">${price}</div>
-						<div class="circle"></div>
-				</div>
-			{{/each}}
-		{{else}}
-		{{if (foodItems.menu==5)}}
-			{{each(oIndex, o) foodItems.chinese}}
-				<div class="col-md-3 itemDetail" style="background-image:url(${location})">
-						<div class="name">${name}</div>
-						<div class="price">${price}</div>
-						<div class="circle"></div>
-				</div>
-			{{/each}}
-		{{else}}
-		{{if (foodItems.menu==6)}}
-			{{each(oIndex, o) foodItems.vegStarters}}
-				<div class="col-md-3 itemDetail" style="background-image:url(${location})">
-						<div class="name">${name}</div>
-						<div class="price">${price}</div>
-						<div class="circle"></div>
-				</div>
-			{{/each}}
-
-		{{/if}} {{/if}} {{/if}} {{/if}} {{/if}} {{/if}}
-</script>
-<script id="bill" type="text/x-jquery-tmpl">
-		<div class="col-md-7">${foodItems.itemName}</div>
-		<div class="col-md-2">1</div>
-		<div class="col-md-3">${foodItems.itemPrice}</div>
-</script>
-<script id="total" type="text/x-jquery-tmpl">
-<span style="font-size:24px">₹${foodItems.total}</span>
-</script>
 </html>

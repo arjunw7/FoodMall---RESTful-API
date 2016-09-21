@@ -1,0 +1,38 @@
+<div class="header">
+	<div class="welcome">
+		Welcome,{{ current_user_name }}
+	</div>
+	<div class="brand">
+		<img src="../images/logo.png" width="300px">
+	</div>
+	<ul class="adminMenu" style="list-style:none">
+		<li><a href="#addItem">Add Item</a></li>
+		<li><a href="#removeItem">Remove Items</a></li>
+		<li><a href="#users">Users</a></li>
+		<li><a href="#admin">Signout</a></li>
+	</ul>
+</div>
+<div class="addItem">
+	<form ng-submit='addItem()'>
+		
+		<input type="text" placeholder="Item Name" ng-model="item_name" required>
+		<input type="text" placeholder="Item Price" ng-model="item_price" required>
+		<input type="file" name="pic" accept="image/*" ng-model="image_location" required>
+		<select placeholder="select category" ng-model="category">
+			
+			<option value="special" name="special">Today's Special</option>
+			<option value="breakfast" name="breakfast">Breakfast</option>
+			<option value="milkShakes" name="milkShakes">Milkshakes</option>
+			<option value="beverages" name="beverages">Beverages</option>
+			<option value="southIndian" name="southIndian">South Indian</option>
+			<option value="chinese" name="chinese">Chinese</option>
+			<option value="vegStarters" name="vegStarters">Veg Starters</option>
+			<option value="nvStarters" name="nvStarters">Non veg Starters</option>
+			<option value="vegCurry" name="vegCurry">Veg Curry</option>
+			<option value="nvCurry" name="nvCurry">Non Veg Curry</option>
+			<option value="breads" name="breads">Breads</option>
+		</select>
+		<button type="submit">Add Item</button>
+	</form>
+
+</div>

@@ -1,0 +1,24 @@
+<div class="header">
+	<div class="welcome">
+		Welcome
+	</div>
+	<div class="brand">
+		<a href="#/">
+		<img src="../images/logo.png" width="300px"></a>
+	</div>
+</div>
+<div class="formFirst">
+	<form class="form-auth" ng-submit="register()">
+		<!-- <input type="text" ng-model="user.name" placeholder="Name"></input> -->
+		<input type="text" ng-model="user.fullName" placeholder="name" required></input>
+		<input type="text" ng-model="user.email" placeholder="email" required></input>
+		<input type="text" id="upper" ng-model="user.username" placeholder="registration number" required></input>
+		<input type="password" ng-model="user.password" placeholder="password"></input>
+		<label>Verification Code: </label>
+		<div id="captcha"></div>
+		<input type="text" placeholder="enter verification code" id="captchaText" required></input>
+		<button type="submit" value="Register"><div class="text">Next</div></button>
+		<div class="gotoSignup"><a href="#/login"><i>login</a></i></div><br>
+		<p class="text-warning">{{error_message}}</p>
+	</form>
+</div>

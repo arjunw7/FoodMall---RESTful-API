@@ -1,0 +1,30 @@
+<div class="header">
+	<div class="welcome">
+		Welcome,{{ current_user_name }}
+	</div>
+	<div class="brand">
+		<img src="../images/logo.png" width="300px">
+	</div>
+	<ul class="adminMenu" style="list-style:none">
+		<li><a href="#addItem">Add Item</a></li>
+		<li><a href="#removeItem">Remove Items</a></li>
+		<li><a href="#users">Users</a></li>
+		<li><a href="#admin">Signout</a></li>
+	</ul>
+</div>
+<div class="users">
+	<input type="text" placeholder="search user" ng-model="searchUser"></input>
+	<div class="searchUsers">
+		
+		<div class="userList" ng-repeat="user in users | filter:'!admin' | filter:searchUser">
+			<div class="col-md-3">
+				<div class="user">
+					<div class="fullname">{{ user.fullName }}</div>
+					<div class="id">{{ user.username }}</div>
+					<div class="email">{{ user.email }}</div>
+					<div class="deleteUser" ng-click='removeUser(user._id)'><img src="/images/crossWhite.png"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

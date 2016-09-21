@@ -1,0 +1,213 @@
+<div class="header">
+	<div class="welcome">
+		Welcome, {{ current_user_name }}
+	</div>
+	<div class="brand">
+		<img src="../images/logo.png" width="300px">
+	</div>
+	<ul class="adminMenu" style="list-style:none">
+		<li><a href="#addItem">Add Item</a></li>
+		<li><a href="#removeItem">Remove Items</a></li>
+		<li><a href="#users">Users</a></li>
+		<li><a href="#admin">Signout</a></li>
+	</ul>
+</div>
+<div class="addOrder">
+				<div class="list col-md-2" ng-init="special=true">
+						<div class="row category">
+							<div class="item breakfast" ng-click="special=true; breakfast=false; milkShakes=false; beverages=false; southIndian=false; chinese=false; vegStarters=false; nonVegStarters=false; vegCurry=false; nonVegCurry=false; breads=false">
+							 <img src="../images/arrow.png" width="15px" style="margin-bottom:5px">
+							Today's Special
+							</div>
+							<div class="item breakfast" ng-click="special=false; breakfast=true; milkShakes=false; beverages=false; southIndian=false; chinese=false; vegStarters=false; nonVegStarters=false; vegCurry=false; nonVegCurry=false; breads=false">
+							 <img src="../images/arrow.png" width="15px" style="margin-bottom:5px">
+							Breakfast
+							</div>
+							<div class="item milkShakes" ng-click="special=false; breakfast=false; milkShakes=true; beverages=false; southIndian=false; chinese=false; vegStarters=false; nonVegStarters=false; vegCurry=false; nonVegCurry=false; breads=false">
+							<img src="../images/arrow.png" width="15px" style="margin-bottom:5px">
+							Milk Shakes
+							</div>
+							<div class="item beverages" ng-click="special=false; breakfast=false; milkShakes=false; beverages=true; southIndian=false; chinese=false; vegStarters=false; nonVegStarters=false; vegCurry=false; nonVegCurry=false; breads=false">
+							<img src="../images/arrow.png" width="15px" style="margin-bottom:5px">
+								Beverages
+							</div>
+							<div class="item southIndian" ng-click="special=false; breakfast=false; milkShakes=false; beverages=false; southIndian=true; chinese=false; vegStarters=false; nonVegStarters=false; vegCurry=false; nonVegCurry=false; breads=false">
+							<img src="../images/arrow.png" width="15px" style="margin-bottom:5px">
+								South Indian
+							</div>
+							<div class="item chinese" ng-click="special=false; breakfast=false; milkShakes=false; beverages=false; southIndian=false; chinese=true; vegStarters=false; nonVegStarters=false; vegCurry=false; nonVegCurry=false; breads=false">
+							<img src="../images/arrow.png" width="15px" style="margin-bottom:5px">
+								Chinese
+							</div>
+							<div class="item" ng-click="special=false; breakfast=false; milkShakes=false; beverages=false; southIndian=false; chinese=false; vegStarters=true; nonVegStarters=false; vegCurry=false; nonVegCurry=false; breads=false">
+							<img src="../images/arrow.png" width="15px" style="margin-bottom:5px">
+								Veg Starters
+							</div>
+							<div class="item vegStarters" ng-click="special=false; breakfast=false; milkShakes=false; beverages=false; southIndian=false; chinese=false; vegStarters=false; nonVegStarters=true; vegCurry=false; nonVegCurry=false; breads=false">
+							<img src="../images/arrow.png" width="15px" style="margin-bottom:5px">
+								Non-Veg Starters
+							</div>
+							<div class="item" ng-click="special=false; breakfast=false; milkShakes=false; beverages=false; southIndian=false; chinese=false; vegStarters=false; nonVegStarters=false; vegCurry=true; nonVegCurry=false; breads=false">
+							<img src="../images/arrow.png" width="15px" style="margin-bottom:5px">
+								Veg Curry
+							</div>
+							<div class="item" ng-click="special=false; breakfast=false; milkShakes=false; beverages=false; southIndian=false; chinese=false; vegStarters=false; nonVegStarters=false; vegCurry=false; nonVegCurry=true; breads=false">
+							<img src="../images/arrow.png" width="15px" style="margin-bottom:5px">
+								Non-Veg Curry
+							</div>
+							<div class="item" ng-click="special=false; breakfast=false; milkShakes=false; beverages=false; southIndian=false; chinese=false; vegStarters=false; nonVegStarters=false; vegCurry=false; nonVegCurry=false; breads=true">
+							<img src="../images/arrow.png" width="15px" style="margin-bottom:5px">
+								Breads
+							</div>
+						</div>
+					</div>
+					<div class="items col-md-7" >
+						<div class="row" ng-show="special">
+							<div ng-repeat="item in menu | filter: {category: 'special'}">
+								<div class="col-md-3">
+									<div class="itemDetail">
+										<div class="itemss" style="background-image:url({{ item.image_location }}); height: 135px;background-size:cover;">
+											<div class="name">{{ item.item_name }}</div>
+											<div class="price">₹ {{ item.item_price }} </div>
+											<div class="circle circle1" ng-click="removeItem(item._id)"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row" ng-show="breakfast">
+							<div ng-repeat="item in menu | filter: {category: 'breakfast'}">
+								<div class="col-md-3">
+									<div class="itemDetail" >
+										<div class="itemss" style="background-image:url({{ item.image_location }}); height: 135px;background-size:cover;">
+											<div class="name">{{ item.item_name }}</div>
+											<div class="price">₹ {{ item.item_price }} </div>
+											<div class="circle circle1"  ng-click="removeItem(item._id)"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row" ng-show="milkShakes">
+							<div ng-repeat="item in menu | filter: {category: 'milkShakes'}">
+								<div class="col-md-3">
+									<div class="itemDetail">
+										<div  class="itemss" style="background-image:url({{ item.image_location }}); height: 135px;background-size:cover;">
+											<div class="name">{{ item.item_name }}</div>
+											<div class="price">₹ {{ item.item_price }} </div>
+											<div class="circle circle1"  ng-click="removeItem(item._id)"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row" ng-show="beverages">
+							<div ng-repeat="item in menu | filter: {category: 'beverages'}">
+								<div class="col-md-3">
+									<div class="itemDetail">
+										<div class="itemss" style="background-image:url({{ item.image_location }}); height: 135px;background-size:cover;">
+											<div class="name">{{ item.item_name }}</div>
+											<div class="price">₹ {{ item.item_price }} </div>
+											<div class="circle circle1"  ng-click="removeItem(item._id)"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row" ng-show="southIndian">
+							<div ng-repeat="item in menu | filter: {category: 'southIndian'}">
+								<div class="col-md-3">
+									<div class="itemDetail">
+										<div class="itemss" style="background-image:url({{ item.image_location }}); height: 135px;background-size:cover;">
+											<div class="name">{{ item.item_name }}</div>
+											<div class="price">₹ {{ item.item_price }} </div>
+											<div class="circle circle1"  ng-click="removeItem(item._id)"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row" ng-show="chinese">
+							<div ng-repeat="item in menu | filter: {category: 'chinese'}">
+								<div class="col-md-3">
+									<div class="itemDetail">		
+										<div class="itemss" style="background-image:url({{ item.image_location }}); height: 135px;background-size:cover;">
+											<div class="name">{{ item.item_name }}</div>
+											<div class="price">₹ {{ item.item_price }} </div>
+											<div class="circle circle1"  ng-click="removeItem(item._id)"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row" ng-show="vegStarters">
+							<div ng-repeat="item in menu | filter: {category: 'vegStarters'}">
+								<div class="col-md-3">
+									<div class="itemDetail">
+										<div class="itemss" style="background-image:url({{ item.image_location }}); height: 135px;background-size:cover;">
+											<div class="name">{{ item.item_name }}</div>
+											<div class="price">₹ {{ item.item_price }} </div>
+											<div class="circle circle1"  ng-click="removeItem(item._id)"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row" ng-show="nonVegStarters">
+							<div ng-repeat="item in menu | filter: {category: 'nvStarters'}">
+								<div class="col-md-3">
+									<div class="itemDetail">
+										<div class="itemss" style="background-image:url({{ item.image_location }}); height: 135px;background-size:cover;">
+											<div class="name">{{ item.item_name }}</div>
+											<div class="price">₹ {{ item.item_price }} </div>
+											<div class="circle circle1"  ng-click="removeItem(item._id)"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row" ng-show="vegCurry">
+							<div ng-repeat="item in menu | filter: {category: 'vegCurry'}">
+								<div class="col-md-3">
+									<div class="itemDetail">
+										<div class="itemss" style="background-image:url({{ item.image_location }}); height: 135px;background-size:cover;">
+											<div class="name">{{ item.item_name }}</div>
+											<div class="price">₹ {{ item.item_price }} </div>
+											<div class="circle circle1"  ng-click="removeItem(item._id)"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row" ng-show="nonVegCurry">
+							<div ng-repeat="item in menu | filter: {category: 'nvCurry'}">
+								<div class="col-md-3">
+									<div class="itemDetail">
+										<div class="itemss" style="background-image:url({{ item.image_location }}); height: 135px;background-size:cover;">
+											<div class="name">{{ item.item_name }}</div>
+											<div class="price">₹ {{ item.item_price }} </div>
+											<div class="circle circle1"  ng-click="removeItem(item._id)"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row" ng-show="breads">
+							<div ng-repeat="item in menu | filter: {category: 'breads'}">
+								<div class="col-md-3">
+									<div class="itemDetail">
+										<div class="itemss" style="background-image:url({{ item.image_location }}); height: 135px;background-size:cover;">
+											<div class="name">{{ item.item_name }}</div>
+											<div class="price">₹ {{ item.item_price }} </div>
+											<div class="circle circle1" ng-click="removeItem(item._id)"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+
+					</div>
+					
+</div>
+			
