@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Admin</title>
+<meta name="author" content="Arjun Wadhwa"/>
+<meta name="viewport" content=" width=device-width, initial-scale=1.0"/>
+<link rel="stylesheet" type="text/css" href="/css/style.css">
+<link rel="stylesheet" type="text/css" href='/bower_components/bootstrap/dist/css/bootstrap.css'>
+<link rel="stylesheet" type="text/css" href='/bower_components/raleway/raleway.css'>
+<script src="/bower_components/jquery/dist/jquery.js"></script>
+<script src="/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+<script src="/bower_components/angular/angular.js"></script>
+<script src="/bower_components/angular-resource/angular-resource.js"></script>
+<script src="/bower_components/angular-route/angular-route.js"></script>
+<script src="js/controllers.js"></script>
+<script src="js/default.js"></script>
+<script>
+	jQuery(window).load(function() {
+		jQuery("#status").fadeOut();
+		jQuery("#preloader").delay(1000).fadeOut(500);
+	});
+</script>
+</head>
+<body ng-app="foodmall">
+	<div id="preloader">
+  		<div id="status">
+  			<img src="/images/loader.gif">
+       		<!-- <div class="loaderText">LOADING..</div> -->
+		</div>
+	</div>
+	<div class="mainContainer" >
+			<div class="screen">
+				<!-- Add Order Slide -->
+				<div ng-view>
+				</div>
+			</div>
+	</div>
+</body>
+</html>
