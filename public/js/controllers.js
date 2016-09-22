@@ -15,95 +15,9 @@ var app = angular.module('foodmall', ['ngRoute', 'ngResource']).run(function($ro
   
 });
 
-app.config(function($routeProvider, $locationProvider, $httpProvider){
-    //================================================
-  // Check if the user is connected
-  //================================================
-var checkLoggedin = function($q, $timeout, $http, $location, $rootScope){
-    // Initialize a new promise
-    var deferred = $q.defer();
-
-    // Make an AJAX call to check if the user is logged in
-    $http.get('auth/isAuthenticated').success(function(user){
-      // Authenticated
-      if (user !== '0')
-        /*$timeout(deferred.resolve, 0);*/
-        deferred.resolve();
-
-      // Not Authenticated
-      else {
-        deferred.reject();
-        $location.url('/main');
-      }
-    });
-
-    return deferred.promise;
-  };
-var checkAdminLoggedin = function($q, $timeout, $http, $location, $rootScope){
-    // Initialize a new promise
-    var deferred = $q.defer();
-
-    // Make an AJAX call to check if the user is logged in
-    $http.get('auth/isAuthenticated').success(function(user){
-      // Authenticated
-      if (user !== '0' && user.username =='admin' )
-        /*$timeout(deferred.resolve, 0);*/
-        deferred.resolve();
-
-      // Not Authenticated
-      else {
-        deferred.reject();
-        $location.url('/main');
-      }
-    });
-
-    return deferred.promise;
-  };
-    var checkLoggedout = function($q, $timeout, $http, $location, $rootScope){
-    // Initialize a new promise
-    var deferred = $q.defer();
-
-    // Make an AJAX call to check if the user is logged in
-    $http.get('auth/isAuthenticated').success(function(user){
-      // Authenticated
-      if (user == '0')
-        /*$timeout(deferred.resolve, 0);*/
-        deferred.resolve();
-
-      // Not Authenticated
-      else {
-        deferred.reject();
-        $location.url('/menu');
-      }
-    });
-
-    return deferred.promise;
-  };
-  //================================================
-  
-  //================================================
-  // Add an interceptor for AJAX errors
-  //================================================
-  $httpProvider.interceptors.push(function($q, $location) {
-    return {
-      response: function(response) {
-        // do something on success
-        return response;
-      },
-      responseError: function(response) {
-        if (response.status === 401)
-          $location.url('/login');
-        return $q.reject(response);
-      }
-    };
-  });
-  //================================================
-
-  //================================================
-  // Define all the routes
-  //================================================
-
+app.config(function($routeProvider){
   $routeProvider
+
     .when('/', {
       templateUrl: 'main.ejs',
       controller: 'mainController'
@@ -123,7 +37,6 @@ var checkAdminLoggedin = function($q, $timeout, $http, $location, $rootScope){
     .when('/signup', {
       templateUrl: 'signup.ejs',
       controller: 'authController'
-      }
     })
      //the forgot password display
     .when('/forgotPassword', {
@@ -138,10 +51,7 @@ var checkAdminLoggedin = function($q, $timeout, $http, $location, $rootScope){
 
     .when('/menu', {
       templateUrl: 'order.ejs',
-      controller: 'mainController',
-      resolve: {
-        loggedin: checkLoggedin
-      }
+      controller: 'mainController'
     })
 
     .when('/admin', {
@@ -176,10 +86,7 @@ var checkAdminLoggedin = function($q, $timeout, $http, $location, $rootScope){
 
     .when('/reload', {
       templateUrl: 'reload.ejs',
-      controller: 'mainController',
-      resolve: {
-        loggedin: checkLoggedin
-      }
+      controller: 'mainController'
     });
 });
 
