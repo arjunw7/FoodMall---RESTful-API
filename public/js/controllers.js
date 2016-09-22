@@ -53,7 +53,7 @@ var checkAdminLoggedin = function($q, $timeout, $http, $location, $rootScope){
       // Not Authenticated
       else {
         deferred.reject();
-        $location.url('/login');
+        $location.url('/main');
       }
     });
 
@@ -73,7 +73,7 @@ var checkAdminLoggedin = function($q, $timeout, $http, $location, $rootScope){
       // Not Authenticated
       else {
         deferred.reject();
-        $location.url('/home');
+        $location.url('/menu');
       }
     });
 
