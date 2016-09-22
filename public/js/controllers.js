@@ -106,51 +106,34 @@ var checkAdminLoggedin = function($q, $timeout, $http, $location, $rootScope){
   $routeProvider
     .when('/', {
       templateUrl: 'main.ejs',
-      controller: 'mainController',
-      resolve: {
-        loggedin: checkLoggedout
-      }
+      controller: 'mainController'
     })
 
     .when('/main', {
       templateUrl: 'main.ejs',
-      controller: 'mainController',
-      resolve: {
-        loggedin: checkLoggedout
-      }
+      controller: 'mainController'
     })
 
     //the login display
     .when('/login', {
       templateUrl: 'login.ejs',
-      controller: 'authController',
-      resolve: {
-        loggedin: checkLoggedout
-      }
+      controller: 'authController'
     })
     //the signup display
     .when('/signup', {
       templateUrl: 'signup.ejs',
-      controller: 'authController',
-      resolve: {
-        loggedin: checkLoggedout
+      controller: 'authController'
       }
     })
      //the forgot password display
     .when('/forgotPassword', {
       templateUrl: 'forgotPassword.ejs',
-      controller: 'authController',
-      resolve: {
-        loggedin: checkLoggedout
-      }
+      controller: 'authController'
     })
     //the forgot password display
     .when('/reset/:token', {
       templateUrl: 'reset.ejs',
-      controller: 'authController',
-      resolve: {
-        loggedin: checkLoggedout
-      }
+      controller: 'authController'
     })
 
     .when('/menu', {
