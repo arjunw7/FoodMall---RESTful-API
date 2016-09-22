@@ -1,5 +1,14 @@
-var app = angular.module('foodmall', ['ngRoute', 'ngResource']).run(function($rootScope) {
-  $rootScope.authenticated = true;
+var app = angular.module('foodmall', ['ngRoute', 'ngResource']).run(function($rootScope, $http) {
+   $http.get('auth/confirm-login')
+          .success(function (user) {
+              if (user) {
+                  $rootScope.current_user_name = user.fullName;
+                  $rootScope.authenticated = true;
+                  $rootScope.current_user = user.username;
+                  $rootScope.current_user_email = user.email;
+              }
+  });
+  $rootScope.authenticated = false;
   $rootScope.current_user = '';
   $rootScope.current_user_name = '';
   $rootScope.total= 0;

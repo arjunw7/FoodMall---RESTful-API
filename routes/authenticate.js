@@ -32,6 +32,10 @@ module.exports = function(passport){
 		req.logout();
 		res.redirect('/');
 	});
+    //route to retain user details on client side
+    router.get('/confirm-login', function(req, res) {
+        res.send(req.user)
+    });
 
 	return router;
 }	
